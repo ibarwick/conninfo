@@ -1,0 +1,9 @@
+tmp_check/
+*.o
+*.so
+*~
+.#*
+*dSYM*
+*.tgz
+*.tar.gz
+

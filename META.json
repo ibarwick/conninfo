@@ -1,0 +1,44 @@
+{
+    "name": "conninfo",
+    "abstract": "conninfo manipulation functions",
+    "version": "1.0.0",
+    "release_status": "stable",
+    "maintainer": "Ian Barwick <barwick@gmail.com>",
+    "license": {
+        "PostgreSQL": "https://www.postgresql.org/about/licence"
+    },
+    "prereqs": {
+        "runtime": {
+            "requires": {
+                "PostgreSQL": "9.5.0"
+            }
+        }
+    },
+    "provides": {
+        "conninfo": {
+            "abstract": "conninfo manipulation functions",
+            "file": "conninfo--1.0.sql",
+            "docfile": "README.md",
+            "version": "1.0.0"
+        }
+    },
+    "resources": {
+        "homepage": "https://sql-info.de/postgresql/conninfo/index.html",
+        "repository": {
+            "url":  "git://github.com/ibarwick/conninfo.git",
+            "web":  "https://github.com/ibarwick/conninfo",
+            "type": "git"
+        },
+        "bugtracker": {
+            "web": "https://github.com/ibarwick/conninfo/issues/"
+        }
+    },
+    "meta-spec": {
+        "version": "1.0.0",
+        "url": "https://pgxn.org/meta/spec.txt"
+    },
+    "generated_by": "Ian Barwick",
+    "tags": [
+        "conninfo",
+    ]
+}

@@ -1,0 +1,5 @@
+# conninfo
+comment = 'conninfo string manipulation functions'
+default_version = '1.0'
+module_pathname = '$libdir/conninfo'
+relocatable = true

@@ -1,0 +1,72 @@
+/*
+ * Regression test for conninfo
+ */
+-- conninfo_parse()
+SELECT * FROM conninfo_parse('host=foo user=bar');
+ keyword | value 
+---------+-------
+ user    | bar
+ host    | foo
+(2 rows)
+
+SELECT * FROM conninfo_parse('foo=bar');
+ERROR:  unable to parse provided conninfo string "foo=bar"
+DETAIL:  invalid connection option "foo"
+
+SELECT * FROM conninfo_parse('postgresql://localhost:5433');
+ keyword |   value   
+---------+-----------
+ host    | localhost
+ port    | 5433
+(2 rows)
+
+SELECT * FROM conninfo_parse('mysql://localhost:5433');
+ERROR:  unable to parse provided conninfo string "mysql://localhost:5433"
+DETAIL:  missing "=" after "mysql://localhost:5433" in connection info string
+
+-- conninfo_validate()
+SELECT conninfo_validate('host=foo user=bar');
+ conninfo_validate 
+-------------------
+ t
+(1 row)
+
+SELECT conninfo_validate('foo=bar');
+WARNING:  unable to parse provided conninfo string "foo=bar"
+DETAIL:  invalid connection option "foo"
+
+ conninfo_validate 
+-------------------
+ f
+(1 row)
+
+SELECT conninfo_validate('postgresql://localhost:5433');
+ conninfo_validate 
+-------------------
+ t
+(1 row)
+
+SELECT conninfo_validate('mysql://localhost:5433');
+WARNING:  unable to parse provided conninfo string "mysql://localhost:5433"
+DETAIL:  missing "=" after "mysql://localhost:5433" in connection info string
+
+ conninfo_validate 
+-------------------
+ f
+(1 row)
+
+-- conninfo_defaults()
+--
+-- Note: the output will vary between PostgreSQL versions, so we select
+-- some rows which should be the same in all versions.
+SELECT * FROM conninfo_defaults() WHERE keyword IN ('application_name','dbname','host','hostaddr','password','replication') ORDER BY keyword;
+     keyword      |   envvar   | compiled | value |          label           | dispchar | dispsize 
+------------------+------------+----------+-------+--------------------------+----------+----------
+ application_name | PGAPPNAME  |          |       | Application-Name         |          |       64
+ dbname           | PGDATABASE |          |       | Database-Name            |          |       20
+ host             | PGHOST     |          |       | Database-Host            |          |       40
+ hostaddr         | PGHOSTADDR |          |       | Database-Host-IP-Address |          |       45
+ password         | PGPASSWORD |          |       | Database-Password        | *        |       20
+ replication      |            |          |       | Replication              | D        |        5
+(6 rows)
+
